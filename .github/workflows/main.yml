@@ -70,14 +70,22 @@ jobs:
           aws eks --region us-east-2 update-kubeconfig --name rakesh
           echo "kubectl configured successfully."
 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
       - name: Apply Kubernetes Deployment
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-2
         run: |
+          # Print the current directory (should be the root of the repo)
           pwd
-          kubectl apply -f path/to/kubernetes/eks-deployment.yaml
+          # List all files to confirm eks-deployment.yaml exists in the expected location
+          ls -R
+          # Apply the Kubernetes deployment
+          kubectl apply -f kubernetes/eks-deployment.yaml
+
 
       - name: Create Load Balancer
         run: |
