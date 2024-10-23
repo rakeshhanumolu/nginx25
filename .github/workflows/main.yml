@@ -70,10 +70,9 @@ jobs:
           aws eks --region us-east-2 update-kubeconfig --name rakesh
           echo "kubectl configured successfully."
 
-      
-            
       - name: Apply Kubernetes Deployment
-        run: kubectl apply -f eks-deployment.yaml
+        run: |
+          kubectl apply -f kubernetes/eks-deployment.yaml
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
