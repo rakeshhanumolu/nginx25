@@ -21,29 +21,28 @@ jobs:
 
       - name: Build Nginx Docker image
         run: |
+          echo "Building Nginx Docker image..."
           docker build -t nginx-image .
-
 
       - name: Authenticate Docker to ECR
         run: |
+          echo "Authenticating Docker to ECR..."
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 825765405225.dkr.ecr.us-east-2.amazonaws.com
 
       - name: Tag and push to ECR
         run: |
+          echo "Tagging and pushing Docker image to ECR..."
           docker tag nginx-image 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx
           docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx
 
-
       - name: Store Docker image in S3
         run: |
+          echo "Pulling Docker image from ECR..."
           docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx
+          echo "Saving Docker image to file..."
           docker save -o rakeshecr_nginx 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx 
+          echo "Uploading Docker image to S3..."
           aws s3 cp rakeshecr_nginx s3://mybucketviinu/latest/ --region us-east-2
-
-
-
-
-          
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,19 +50,30 @@ jobs:
     steps:
       - name: Set up kubectl
         run: |
-          curl -Ls https://dl.k8s.io/release/stable.txt
+          echo "Retrieving the latest stable version of kubectl..."
+          VERSION=$(curl -Ls https://dl.k8s.io/release/stable.txt)
+          echo "Downloading kubectl version $VERSION..."
+          curl -LO "https://dl.k8s.io/release/$VERSION/bin/linux/amd64/kubectl"
+          echo "Making kubectl executable..."
           chmod +x ./kubectl
+          echo "Moving kubectl to /usr/local/bin..."
           sudo mv ./kubectl /usr/local/bin/kubectl
+          echo "kubectl installed successfully."
 
       - name: Configure kubectl
         run: |
+          echo "Updating kubeconfig for EKS cluster..."
           aws eks --region us-east-2 update-kubeconfig --name rakesh
+          echo "kubectl configured successfully."
 
       - name: Deploy to EKS
         run: |
+          echo "Applying deployment configuration..."
           kubectl apply -f eks-deployment.yaml
+          echo "Deployment applied successfully."
 
       - name: Create Load Balancer
         run: |
+          echo "Creating Load Balancer for nginx deployment..."
           kubectl expose deployment nginx --type=LoadBalancer --name=nginx-lb
-
+          echo "Load Balancer created successfully."
