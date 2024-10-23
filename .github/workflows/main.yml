@@ -69,6 +69,8 @@ jobs:
           echo "Updating kubeconfig for EKS cluster..."
           aws eks --region us-east-2 update-kubeconfig --name rakesh
           echo "kubectl configured successfully."
+          kubectl get nodes
+          kubectl get pods
 
       - name: Checkout repository
         uses: actions/checkout@v2
