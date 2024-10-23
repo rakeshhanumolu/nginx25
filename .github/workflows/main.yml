@@ -60,16 +60,13 @@ jobs:
           sudo mv ./kubectl /usr/local/bin/kubectl
           echo "kubectl installed successfully."
 
-      - name: Configure AWS CLI
-        run: |
-         echo "Configuring AWS CLI with provided credentials..."
-         echo "AWS Region: us-east-2"
-         if aws sts get-caller-identity; then
-          echo "AWS credentials are valid."
-         else
-          echo "Failed to get caller identity. Check AWS credentials and permissions."
-          exit 1
-         fi
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+         with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2  # Update to your region
+
 
       - name: Configure kubectl
         run: |
