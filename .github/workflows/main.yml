@@ -30,8 +30,8 @@ jobs:
 
       - name: Tag and push to ECR
         run: |
-          docker tag nginx-image 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
-          docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:latest
+          docker tag nginx-image 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx
+          docker push 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx
 
 
       - name: Store Docker image in S3
