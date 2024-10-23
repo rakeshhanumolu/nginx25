@@ -77,9 +77,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-2  # Set your default region here
         run: |
-          echo "Applying deployment configuration..."
-          kubectl apply -f eks-deployment.yaml
-          echo "Deployment applied successfully."
+            kubectl apply -f path/to/eks-deployment.yaml
+
 
       - name: Create Load Balancer
         run: |
