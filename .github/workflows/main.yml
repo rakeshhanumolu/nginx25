@@ -86,5 +86,4 @@ jobs:
         run: |
           echo "Deploying Nginx to EKS..."
           kubectl apply -f kubernetes/eks-deployment.yaml
-          kubectl get pods --watch
-          echo "Nginx deployment completed."
+          
