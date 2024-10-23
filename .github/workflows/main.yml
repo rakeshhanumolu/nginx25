@@ -36,8 +36,15 @@ jobs:
 
       - name: Store Docker image in S3
         run: |
-          aws s3 cp s3://mybucketviinu/nginx .
-          aws s3 cp 825765405225.dkr.ecr.us-east-2.amazonaws.com/nginx s3://mybucketviinu/nginx
+          aws s3 cp s3://mybucketviinu/nginx ./nginx
+          aws s3 cp s3://mybucketviinu/nginx ./nginx --recursive
+          docker pull 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx
+          docker save -o nginx-image.tar nginx-image
+
+
+
+
+          
 
   deploy:
     runs-on: ubuntu-latest
