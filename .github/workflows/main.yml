@@ -70,11 +70,6 @@ jobs:
           aws eks --region us-east-2 update-kubeconfig --name rakesh
           echo "kubectl configured successfully."
 
-      - name: Validate EKS Connectivity
-        run: |
-          echo "Checking cluster nodes..."
-          kubectl get nodes
-
 
       - name: Deploy to EKS
         env:
