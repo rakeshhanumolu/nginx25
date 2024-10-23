@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Set up kubectl
         run: |
-          curl -s https://dl.k8s.io/release/stable.txt
+          curl -Ls https://dl.k8s.io/release/stable.txt
           chmod +x ./kubectl
           sudo mv ./kubectl /usr/local/bin/kubectl
 
