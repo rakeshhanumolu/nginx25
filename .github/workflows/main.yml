@@ -71,12 +71,13 @@ jobs:
           echo "kubectl configured successfully."
 
       - name: Apply Kubernetes Deployment
-        run: |
-          kubectl apply -f https://github.com/rakeshhanumolu/nginx23/blob/main/kubernetes/eks-deployment.yaml
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-2
+        run: |
+          kubectl apply -f ./kubernetes/eks-deployment.yaml
+        
 
       - name: Create Load Balancer
         run: |
