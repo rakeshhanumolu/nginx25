@@ -1,20 +1,25 @@
+yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: eks-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: nginx
+      app: eks-app
   template:
     metadata:
       labels:
-        app: nginx
+        app: eks-app
     spec:
       containers:
-      - name: nginx
+      - name: eks-container
         image: 825765405225.dkr.ecr.us-east-2.amazonaws.com/rakeshecr:nginx
-        ports:
-        - containerPort: 80
-        
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: ${AWS_ACCESS_KEY_ID}
+        - name: AWS_SECRET_ACCESS_KEY
+          value: ${AWS_SECRET_ACCESS_KEY}
+        - name: AWS_DEFAULT_REGION
+          value: us-east-2
