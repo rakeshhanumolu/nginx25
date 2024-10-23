@@ -75,7 +75,7 @@ jobs:
       
       - name: Configure AWS credentials
         run: |
-          aws eks update-kubeconfig --name <your-cluster-name> --region us-east-2
+          aws eks update-kubeconfig --name rakesh --region us-east-2
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
