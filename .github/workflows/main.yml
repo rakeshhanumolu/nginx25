@@ -82,18 +82,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
-      - name: Apply Kubernetes Deployment
+      - name: Deploy Nginx to EKS
         run: |
-          pwd
-          ls -R
-          kubectl apply -f kubernetes/eks-deployment.yaml --validate=false
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-
-      - name: Create Load Balancer
-        run: |
-          echo "Creating Load Balancer for nginx deployment..."
-          kubectl expose deployment nginx --type=LoadBalancer --name=nginx-lb
-          echo "Load Balancer created successfully."
+          echo "Deploying Nginx to EKS..."
+          kubectl apply -f kubernetes/eks-deployment.yaml
+          kubectl get pods --watch
+          echo "Nginx deployment completed."
