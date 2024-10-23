@@ -60,15 +60,21 @@ jobs:
   #         sudo mv ./kubectl /usr/local/bin/kubectl
   #         echo "kubectl installed successfully."
 
-  #     - name: Configure kubectl
-  #       env:
-  #         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         AWS_DEFAULT_REGION: us-east-2  # Set your default region here
-  #       run: |
-  #         echo "Updating kubeconfig for EKS cluster..."
-  #         aws eks --region us-east-2 update-kubeconfig --name rakesh
-  #         echo "kubectl configured successfully."
+      - name: Configure kubectl
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-2  # Set your default region here
+        run: |
+          echo "Updating kubeconfig for EKS cluster..."
+          aws eks --region us-east-2 update-kubeconfig --name rakesh
+          echo "kubectl configured successfully."
+
+      - name: Validate EKS Connectivity
+        run: |
+          echo "Checking cluster nodes..."
+          kubectl get nodes
+
 
       - name: Deploy to EKS
         env:
