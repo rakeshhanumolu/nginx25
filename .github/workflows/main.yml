@@ -64,8 +64,12 @@ jobs:
         run: |
          echo "Configuring AWS CLI with provided credentials..."
          echo "AWS Region: us-east-2"
-         aws sts get-caller-identity  # This will fail if credentials are missing
-
+         if aws sts get-caller-identity; then
+          echo "AWS credentials are valid."
+         else
+          echo "Failed to get caller identity. Check AWS credentials and permissions."
+          exit 1
+         fi
 
       - name: Configure kubectl
         run: |
