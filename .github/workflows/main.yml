@@ -69,9 +69,10 @@ jobs:
       - name: List files in the kubernetes directory
         run: |
           echo "Listing files in kubernetes directory..."
-          ls -al kubernetes
+          ls -R
 
       - name: Deploy Nginx to EKS
         run: |
           echo "Applying Kubernetes deployment..."
           kubectl apply -f nginx23/kubernetes/eks-deployment.yaml
+          shell: /usr/bin/bash -e {0}
