@@ -64,7 +64,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-2
         run: |
-          aws eks --region us-east-2 update-kubeconfig --name rakesh
+          aws eks --region us-east-2 update-kubeconfig --name my-cluster
 
       - name: List files in the kubernetes directory
         run: |
@@ -74,4 +74,4 @@ jobs:
       - name: Deploy Nginx to EKS
         run: |
           echo "Applying Kubernetes deployment..."
-          kubectl apply -f kubernetes/eks-deployment.yaml
+          kubectl apply -f nginx23/kubernetes/eks-deployment.yaml
