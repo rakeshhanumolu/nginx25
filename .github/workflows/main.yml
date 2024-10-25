@@ -75,5 +75,5 @@ jobs:
         run: |
           echo "Applying Kubernetes deployment..."
           cd kubernetes
-          kubectl apply -f eks-deployment.yaml
+          kubectl apply -f eks-deployment.yaml --validate=false
 
