@@ -66,14 +66,14 @@ jobs:
         run: |
           aws eks --region us-east-2 update-kubeconfig --name my-cluster
 
-      - name: List files in the kubernetes directory
-        run: |
-          echo "Listing files in kubernetes directory..."
-          ls -R
 
       - name: Deploy Nginx to EKS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-2
         run: |
           echo "Applying Kubernetes deployment..."
-          cd path/to/nginx23/kubernetes
+          cd kubernetes
           kubectl apply -f eks-deployment.yaml
 
