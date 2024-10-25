@@ -65,9 +65,10 @@ jobs:
 
       - name: Deploy Nginx to EKS
         run: |
-          echo "Applying Kubernetes deployment and service files..."
-          kubectl apply -f nginx23/eks-deployment.yaml
-          kubectl apply -f nginx23/eks-service.yaml
+          echo "Applying Kubernetes deployment"
+          kubectl apply -f kubernetes/eks-deployment.yaml
+
+        
           
 
       - name: Verify Deployment
